@@ -1,21 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LevelManager : MonoBehaviour {
+public class LevelManager : MonoBehaviour
+{
+	public Sprite unlockedIcon;
 
-
-    [SerializeField]
-    Sprite unlockedIcon;
-
-    [SerializeField]
-    Sprite lockedIcon;
+    public Sprite lockedIcon;
 
     // Use this for initialization
     void Start () {
+		
+		LevelsController.Load(transform.childCount);
 
-    	int countUnlockedLevel = PlayerPrefs.GetInt("Levels", 1); //Первый параметр ключ под которым хранится сейв, второй значение по умолчанию если такого сейва нет
+		int countUnlockedLevel = LevelsController.dataSet.countUnlockedLevel; 
 
         for (int i = 0; i < transform.childCount; i++)
         {

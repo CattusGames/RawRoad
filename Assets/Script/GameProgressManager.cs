@@ -26,7 +26,6 @@ public class GameProgressManager : MonoBehaviour
 
     void FixedUpdate()
     {
-        PlayerPrefs.SetFloat("LevelTime",progress);
         progress = progress+0.01f;
         gameObject.GetComponent<Text>().text ="Time: " + progress.ToString("0.0");
         TimeModificator.color = color;

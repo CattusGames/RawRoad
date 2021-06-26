@@ -20,6 +20,9 @@ public class InputProcessing : MonoBehaviour
     {
         X = Input.GetAxis("Horizontal");
 
+		if (Input.GetKeyDown("t"))
+			GetComponent<Game>().Skip();
+
         if (Input.GetMouseButton(0)){
 
             if (leftPart.Contains(Input.mousePosition))

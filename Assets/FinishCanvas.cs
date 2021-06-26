@@ -7,11 +7,9 @@ using UnityEngine.SceneManagement;
 public class FinishCanvas : MonoBehaviour
 {
 
-
     public Text timeText;
     public Text bestTimeText;
-
-    float time;
+	
     float bestTime;
 
     public GameObject newBestTimeButton;
@@ -19,55 +17,29 @@ public class FinishCanvas : MonoBehaviour
     private void Start()
     {
         newBestTimeButton.SetActive(false);
-        bestTime = LoadLevelProgres(SceneManager.GetActiveScene().buildIndex.ToString());
-        Debug.Log(bestTime);
-    }
+		bestTime = LevelsController.dataSet.Levels[SceneManager.GetActiveScene().buildIndex - 3].BestTime;
+	}
 
-    void Update()
+    public void Finish(float time)
     {
-
-        
-
-        time = PlayerPrefs.GetFloat("LevelTime");
+		bestTime = LevelsController.dataSet.Levels[SceneManager.GetActiveScene().buildIndex - 3].BestTime;
+		if (time < bestTime || bestTime == 0f)
+        {
+            //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+            newBestTimeButton.SetActive(true);
+            bestTime = time;
+            
+			LevelsController.OnLevelFinished(SceneManager.GetActiveScene().buildIndex - 3, bestTime);
+			LevelsController.Save();
+        }
 
         timeText.text = "Time: " + time.ToString("0.0");
         bestTimeText.text = "Best Time: " + bestTime.ToString("0.0");
-
-
-        if (Time.timeScale == 0)
-        {
-            
-
-            if (time < bestTime || bestTime == 0)
-            {
-                //новий рекорд
-                newBestTimeButton.SetActive(true);
-                bestTime = time;
-                Debug.Log(bestTime);
-                SaveLevelProgres(SceneManager.GetActiveScene().buildIndex.ToString(),bestTime);
-
-
-            }
-            else if (time>bestTime)
-            {
-                
-            }
-
-        }
     }
 
 
     static public void SaveLevelProgres(string key, float time)
     {
         PlayerPrefs.SetFloat(SceneManager.GetActiveScene().buildIndex.ToString(),time);
-    }
-
-    static public float LoadLevelProgres(string key)
-    {
-        if (PlayerPrefs.HasKey(key))
-        {
-            return PlayerPrefs.GetFloat(key);
-        }
-        return 0;
     }
 }

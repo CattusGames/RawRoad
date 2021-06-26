@@ -82,7 +82,7 @@ public class SkateControl : MonoBehaviour
 	void SkaterMove(Vector2 inputs)
 	{
 
-		PhysicsRotation = aerial ? Quaternion.identity : GetPhysicsRotation(); // Обертання відповідно землі
+		PhysicsRotation = aerial ? Quaternion.identity : GetPhysicsRotation(); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 		VelocityRotation = GetVelocityRot();
 		InputRotation = Quaternion.identity;
 		ComputedRotation = Quaternion.identity;

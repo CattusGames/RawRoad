@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class Game : MonoBehaviour
 {
     public Canvas mainCanvas;
-    public Canvas finishCanvas;
+	public Canvas finishCanvas;
     public Canvas loseCanvas;
 
     SkateControl control;
@@ -66,6 +66,12 @@ public class Game : MonoBehaviour
         Time.timeScale = 0f;
         mainCanvas.gameObject.SetActive(false);
         finishCanvas.gameObject.SetActive(true);
+		finishCanvas.gameObject.GetComponent<FinishCanvas>().Finish(gameObject.GetComponent<PlayersObstacles>().GPMngr.progress);
 
-    }
+	}
+
+	public void Skip()
+	{
+		Finish();
+	}
 }
