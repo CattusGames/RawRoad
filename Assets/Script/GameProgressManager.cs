@@ -7,9 +7,16 @@ public class GameProgressManager : MonoBehaviour
 {
     [HideInInspector]public float progress;
     [HideInInspector]public float maxVelocitySpeed;
-    public Text TimeModificator;
+    public Text timeModificator;
+    public Text progressTime;
+    public GameObject player;
+    public ParticleSystem destroyParticle;
+    public AudioClip destroySound;
 
+    AudioSource audiosrc;
     Color color = Color.red;
+    Rigidbody rb;
+    Vector3 direction;
 
     private void Awake()
     {
@@ -18,8 +25,10 @@ public class GameProgressManager : MonoBehaviour
 
     void Start()
     {
+        rb = player.GetComponent<Rigidbody>();
+        audiosrc = player.GetComponent<AudioSource>();
         color.a = 0;
-        TimeModificator.color = color;
+        timeModificator.color = color;
 
     }
 
@@ -28,16 +37,19 @@ public class GameProgressManager : MonoBehaviour
     {
         PlayerPrefs.SetFloat("LevelTime",progress);
         progress = progress+0.01f;
-        gameObject.GetComponent<Text>().text ="Time: " + progress.ToString("0.0");
-        TimeModificator.color = color;
+        progressTime.text ="Time: " + progress.ToString("0.0");
+        timeModificator.color = color;
     }
 
-    public void OnObstacles()
+    public void OnObstacles(int timeBonus, Vector3 position)
     {
         StartCoroutine(ChangeColor());
-        int rnd = Random.Range(1,10);
-        TimeModificator.text = "+ " + rnd;
-        progress = progress + rnd;
+        timeModificator.text = "+ " + timeBonus;
+        progress = progress + timeBonus;
+        rb.AddRelativeForce(0, -6f, 0, ForceMode.Impulse);
+        audiosrc.PlayOneShot(destroySound, PlayerPrefs.GetFloat("OtherVolume"));
+        Instantiate(destroyParticle, position, Quaternion.identity);
+        
     }
 
     IEnumerator ChangeColor()
@@ -46,4 +58,19 @@ public class GameProgressManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
         color.a = 0f;
     }
+
+    /*private void OnTriggerEnter(Collider collider)
+    {
+
+        if (collider.gameObject.tag == "MainObstacles")
+        {
+
+            OnObstacles();
+            rb.AddRelativeForce(0, -6f, 0, ForceMode.Impulse);
+            audiosrc.PlayOneShot(destroySound, PlayerPrefs.GetFloat("OtherVolume"));
+            Instantiate(destroyParticle, new Vector3(collider.transform.position.x, collider.transform.position.y, collider.transform.position.z), Quaternion.identity);
+            Destroy(collider.gameObject);
+
+        }
+    }*/
 }
