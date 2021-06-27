@@ -9,12 +9,14 @@ public class GameProgressManager : MonoBehaviour
     [HideInInspector]public float maxVelocitySpeed;
     public Text timeModificator;
     public Text progressTime;
+    public Text speedText;
     public GameObject player;
     public ParticleSystem destroyParticle;
     public AudioClip destroySound;
 
     AudioSource audiosrc;
-    Color color = Color.red;
+    Color timeColor = Color.red;
+    Color speedColor = Color.white;
     Rigidbody rb;
     Vector3 direction;
 
@@ -27,8 +29,8 @@ public class GameProgressManager : MonoBehaviour
     {
         rb = player.GetComponent<Rigidbody>();
         audiosrc = player.GetComponent<AudioSource>();
-        color.a = 0;
-        timeModificator.color = color;
+        timeColor.a = 0;
+        timeModificator.color = timeColor;
 
     }
 
@@ -38,7 +40,18 @@ public class GameProgressManager : MonoBehaviour
         PlayerPrefs.SetFloat("LevelTime",progress);
         progress = progress+0.01f;
         progressTime.text ="Time: " + progress.ToString("0.0");
-        timeModificator.color = color;
+        timeModificator.color = timeColor;
+        var speed = rb.velocity.magnitude*5;
+        if (speed<15)
+        {
+            speedText.color = Color.Lerp(Color.white,Color.red,0.5f);
+        }
+        else
+        {
+            speedText.color = Color.white;  
+        }
+        speedText.text = "Speed: " + speed.ToString("0.0")+" m/h";
+        
     }
 
     public void OnObstacles(int timeBonus, Vector3 position)
@@ -52,11 +65,24 @@ public class GameProgressManager : MonoBehaviour
         
     }
 
+
     IEnumerator ChangeColor()
     {
-        color.a = Mathf.Abs(Mathf.Sin(Time.time));
-        yield return new WaitForSeconds(2f);
-        color.a = 0f;
+
+        timeColor.a = 1;
+
+        float hideTime = 2f; // время исчезновения в секундах
+        float timer = hideTime;
+
+        while (timer > 0)
+        {
+            timer -= Time.deltaTime;
+
+            timeColor.a = (1f / hideTime) * timer;
+
+            yield return null;
+        }
+
     }
 
     /*private void OnTriggerEnter(Collider collider)
