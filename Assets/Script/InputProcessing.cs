@@ -20,7 +20,7 @@ public class InputProcessing : MonoBehaviour
     {
         X = Input.GetAxis("Horizontal");
 
-        if (Input.GetMouseButton(0)){
+       /* if (Input.GetMouseButton(0)){
 
             if (leftPart.Contains(Input.mousePosition))
             {
@@ -34,7 +34,8 @@ public class InputProcessing : MonoBehaviour
             }
         }else{
             X = 0;
-            Y = 0;}}
+            Y = 0;}*/
+    }
         public Vector2 GetDirection(){
 		return new Vector2(X, Y);}
 
