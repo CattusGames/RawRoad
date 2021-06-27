@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3047744433578874551}
   - component: {fileID: 8451658052174089281}
+  - component: {fileID: 5933549451600008095}
   m_Layer: 0
   m_Name: Gate1
   m_TagString: MainObstacles
@@ -40,11 +41,24 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2377922347380558861}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.4713745, y: 0.39557648, z: 0.4811287}
   m_Center: {x: -0.014312744, y: 0.16775131, z: 0.009435654}
+--- !u!114 &5933549451600008095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2377922347380558861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02c51ea80d80b4d49a2595ea0edcd3e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeBonus: 1
 --- !u!1 &6669224285136467156
 GameObject:
   m_ObjectHideFlags: 0
@@ -96,6 +110,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
