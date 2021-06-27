@@ -11,6 +11,7 @@ public class InputProcessing : MonoBehaviour
     private Rect leftPart = new Rect(0, 0, Screen.width / 2, Screen.height-300);
     private Rect rightPart = new Rect(Screen.width / 2, 0, Screen.width / 2, Screen.height-300);
 
+    public GameProgressManager GPMngr;
     private void Awake()
     {
         X = 0;
@@ -22,7 +23,7 @@ public class InputProcessing : MonoBehaviour
 
 
 		if (Input.GetKeyDown("t"))
-			GetComponent<Game>().Skip();
+			GPMngr.Skip();
 
        /* if (Input.GetMouseButton(0)){
 

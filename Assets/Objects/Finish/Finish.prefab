@@ -51,6 +51,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -91,6 +92,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7456329217444019534}
   - component: {fileID: 6299780911943542451}
+  - component: {fileID: 694184770019346633}
   m_Layer: 0
   m_Name: Finish
   m_TagString: Finish
@@ -126,3 +128,15 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.8782148, y: 1.6949158, z: 0.8150363}
   m_Center: {x: -0.04790616, y: 0.3474579, z: -0.39367747}
+--- !u!114 &694184770019346633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7796262321431357428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95d8d1e8a5bf19448b984df09d83373c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

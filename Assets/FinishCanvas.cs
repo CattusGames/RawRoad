@@ -25,7 +25,7 @@ public class FinishCanvas : MonoBehaviour
 		bestTime = LevelsController.dataSet.Levels[SceneManager.GetActiveScene().buildIndex - 3].BestTime;
 		if (time < bestTime || bestTime == 0f)
         {
-            //����� ������
+            
             newBestTimeButton.SetActive(true);
             bestTime = time;
             
