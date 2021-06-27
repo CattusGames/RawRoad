@@ -33,17 +33,17 @@ public class Car : MonoBehaviour
 
         Vector3 Direction = transform.forward * Speed;
 
-        if (!Physics.Raycast(AirRay, out AirHit, 1f) && Physics.Raycast(GroundRay, out GroundHit, 1f)) //можно ехать
+        if (!Physics.Raycast(AirRay, out AirHit, 1f) && Physics.Raycast(GroundRay, out GroundHit, 1f)) //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
         {
             rb.AddForce(Direction);
         }
-        else if (Physics.Raycast(AirRay, out AirHit, 1f) && Physics.Raycast(GroundRay, out GroundHit, 1f))//нужно свернуть в правую сторону
+        else if (Physics.Raycast(AirRay, out AirHit, 1f) && Physics.Raycast(GroundRay, out GroundHit, 1f))//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         {
             transform.Rotate(new Vector3(0, 45, 0) * Time.deltaTime);
             rb.AddForce(Direction);
             //Quaternion.AngleAxis(90,Vector3.up);
         }
-        else if (Physics.Raycast(AirRay, out AirHit, 1f) && !Physics.Raycast(GroundRay, out GroundHit, 1f))//нужно свернуть в левую сторону
+        else if (Physics.Raycast(AirRay, out AirHit, 1f) && !Physics.Raycast(GroundRay, out GroundHit, 1f))//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         {
             transform.Rotate(new Vector3(0, -45, 0) * Time.deltaTime);
             rb.AddForce(Direction);

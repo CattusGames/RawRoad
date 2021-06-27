@@ -1846,6 +1846,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1281422207307300395, guid: 31562c85306a8f1409542c2a572f0913, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1281422207710099684, guid: 31562c85306a8f1409542c2a572f0913, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1941,6 +1945,10 @@ PrefabInstance:
     - target: {fileID: 1281422207989772503, guid: 31562c85306a8f1409542c2a572f0913, type: 3}
       propertyPath: m_Name
       value: FinishCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 1281422207989772503, guid: 31562c85306a8f1409542c2a572f0913, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 31562c85306a8f1409542c2a572f0913, type: 3}
@@ -2357,6 +2365,10 @@ PrefabInstance:
     - target: {fileID: 6548620575728041277, guid: 6975d535bdeff27498bfa87565f15066, type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 6548620575728041277, guid: 6975d535bdeff27498bfa87565f15066, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6548620575922035816, guid: 6975d535bdeff27498bfa87565f15066, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
