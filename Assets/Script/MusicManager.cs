@@ -29,7 +29,7 @@ public class MusicManager : MonoBehaviour
         else
         {
 
-            mainMenuAudioSrc.volume = PlayerPrefs.GetFloat("MainMenuVolume");
+            mainMenuAudioSrc.volume = PlayerPrefs.GetInt("MainMenuVolume");
         }
     }
 

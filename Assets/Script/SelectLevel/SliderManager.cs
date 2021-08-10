@@ -14,34 +14,85 @@ public class SliderManager : MonoBehaviour
 
     float otherVolume;
 
+    RectTransform img;
+
     // Update is called once per frame
     private void Awake()
     {
-        buttonClickSrc = gameObject.GetComponent<AudioSource>();
-        {
-            gameObject.GetComponent<Slider>().value = PlayerPrefs.GetFloat("OtherVolume");
-        }
-        if (musicVolumeSlider)
-        {
-            gameObject.GetComponent<Slider>().value = PlayerPrefs.GetFloat("MainMenuVolume");
-        }
+
         
+        buttonClickSrc = gameObject.GetComponent<AudioSource>();
+
+        img = gameObject.GetComponent<RectTransform>();
+
+
+
     }
-    void Update()
+
+    private void Update()
     {
         if (soundVolumeSlider)
         {
-            PlayerPrefs.SetFloat("OtherVolume", gameObject.GetComponent<Slider>().value);
-            gameObject.GetComponent<Slider>().onValueChanged.AddListener(delegate { ValueChangeCheck(); });
+            var e = PlayerPrefs.GetInt("OtherVolume");
+            CheckPivot(e);
         }
         if (musicVolumeSlider)
         {
-            PlayerPrefs.SetFloat("MainMenuVolume", gameObject.GetComponent<Slider>().value);
+            var e = PlayerPrefs.GetInt("MainMenuVolume");
+            CheckPivot(e);
+        }
+        
+       
+  
+    }
+
+    public void SoundOn()
+    {
+        var e = PlayerPrefs.GetInt("OtherVolume");
+        if (e >= 0.9)
+        {
+            img.pivot = new Vector2(0, 0.5f);
+            PlayerPrefs.SetInt("OtherVolume", 0);
+
+        }
+        else if (e <= 0.1)
+        {
+            img.pivot = new Vector2(1, 0.5f);
+            PlayerPrefs.SetInt("OtherVolume", 1);
+            buttonClickSrc.PlayOneShot(buttonClick, 1);
+
+        }
+
+
+    }
+
+
+    public void MusicOn()
+    {
+        var e = PlayerPrefs.GetInt("MainMenuVolume");
+        if (e >= 0.9)
+        {
+            img.pivot = new Vector2(0, 0.5f);
+            PlayerPrefs.SetInt("MainMenuVolume", 0);
+        }
+        else if (e <= 0.1)
+        {
+            img.pivot = new Vector2(1, 0.5f);
+            PlayerPrefs.SetInt("MainMenuVolume", 1);
+            buttonClickSrc.PlayOneShot(buttonClick, 1);
         }
     }
-    public void ValueChangeCheck()
+
+    public void CheckPivot(float e)
     {
-        otherVolume = PlayerPrefs.GetFloat("OtherVolume");
-        buttonClickSrc.PlayOneShot(buttonClick, otherVolume*0.05f);
+        
+        if (e >= 0.9)
+        {
+            img.pivot = new Vector2(1, 0.5f);
+        }
+        else if (e <= 0.1)
+        {
+            img.pivot = new Vector2(0, 0.5f);
+        }
     }
 }

@@ -8,6 +8,7 @@ TagManager:
   - MainObstacles
   - UIParent
   - ProgressManager
+  - SwipeButton
   layers:
   - Default
   - TransparentFX

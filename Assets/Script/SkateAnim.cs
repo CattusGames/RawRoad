@@ -104,7 +104,7 @@ public class SkateAnim : MonoBehaviour
 		playerAudioSrc = gameObject.GetComponent<AudioSource>();
 		Tilt = 0.5f;
 		anim.SetFloat("Tilt", Tilt);
-		otherSound = PlayerPrefs.GetFloat("OtherVolume");
+		otherSound = PlayerPrefs.GetInt("OtherVolume");
 	}
 
 

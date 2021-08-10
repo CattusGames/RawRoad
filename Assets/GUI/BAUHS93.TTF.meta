@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 316aaebf74bcd0b4389f27d5d7d626fb
+guid: 5483ff0a4ea24f24987c2b0ee985f410
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Russo One
+  - Bauhaus 93
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

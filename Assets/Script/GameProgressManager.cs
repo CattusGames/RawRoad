@@ -80,7 +80,7 @@ public class GameProgressManager : MonoBehaviour
         timeModificator.text = "+ " + timeBonus;
         progress = progress + timeBonus;
         rb.AddRelativeForce(0, -6f, 0, ForceMode.Impulse);
-        audiosrc.PlayOneShot(destroySound, PlayerPrefs.GetFloat("OtherVolume"));
+        audiosrc.PlayOneShot(destroySound, PlayerPrefs.GetInt("OtherVolume"));
         Instantiate(destroyParticle, position, Quaternion.identity);
         
     }
@@ -138,7 +138,7 @@ public class GameProgressManager : MonoBehaviour
 
             OnObstacles();
             rb.AddRelativeForce(0, -6f, 0, ForceMode.Impulse);
-            audiosrc.PlayOneShot(destroySound, PlayerPrefs.GetFloat("OtherVolume"));
+            audiosrc.PlayOneShot(destroySound, PlayerPrefs.GetInt("OtherVolume"));
             Instantiate(destroyParticle, new Vector3(collider.transform.position.x, collider.transform.position.y, collider.transform.position.z), Quaternion.identity);
             Destroy(collider.gameObject);
 
