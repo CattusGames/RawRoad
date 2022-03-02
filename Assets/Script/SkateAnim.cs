@@ -63,10 +63,10 @@ public class SkateAnim : MonoBehaviour
 	void ManageMove()
     {
 
-		if (control.rb.velocity.magnitude<2)
+		if (control.rb.velocity.magnitude<3)
         {
 			playerAudioSrc.PlayOneShot(playerMove,otherSound);
-			Vector3 Direction =transform.forward * 3f;
+			Vector3 Direction = transform.forward * 20f;
 			control.rb.AddForce(Direction, ForceMode.Impulse);
 			Instantiate(PushParticle, new Vector3(PushParticleSpawn.position.x, PushParticleSpawn.position.y, PushParticleSpawn.position.z), Quaternion.identity);
 			anim.SetTrigger("Move");

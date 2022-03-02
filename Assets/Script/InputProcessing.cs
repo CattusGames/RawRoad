@@ -11,7 +11,7 @@ public class InputProcessing : MonoBehaviour
     private Rect leftPart = new Rect(0, 0, Screen.width / 2, Screen.height-300);
     private Rect rightPart = new Rect(Screen.width / 2, 0, Screen.width / 2, Screen.height-300);
 
-    public GameProgressManager GPMngr;
+    //public GameProgressManager GPMngr;
     private void Awake()
     {
         X = 0;
@@ -22,10 +22,10 @@ public class InputProcessing : MonoBehaviour
         X = Input.GetAxis("Horizontal");
 
 
-		if (Input.GetKeyDown("t"))
-			GPMngr.Skip();
+		//if (Input.GetKeyDown("t"))
+			//GPMngr.Skip();
 
-       /* if (Input.GetMouseButton(0)){
+       if (Input.GetMouseButton(0)){
 
             if (leftPart.Contains(Input.mousePosition))
             {
@@ -39,7 +39,7 @@ public class InputProcessing : MonoBehaviour
             }
         }else{
             X = 0;
-            Y = 0;}*/
+            Y = 0;}
     }
         public Vector2 GetDirection(){
 		return new Vector2(X, Y);}

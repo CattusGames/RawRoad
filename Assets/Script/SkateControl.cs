@@ -11,6 +11,7 @@ public class SkateControl : MonoBehaviour
 	public float RotatingSpeed = 1f;
 	public float AdditionalGravity = 0.5f;
 	public float LandingAccelerationRatio = 0.5f;
+	public Wheel[] wheels;
 
 	[HideInInspector] public Rigidbody rb;
 	InputProcessing inputs;
@@ -42,11 +43,26 @@ public class SkateControl : MonoBehaviour
 		Vector2 direction = inputs.GetDirection();
 		CheckPhysics();
 		SkaterMove(direction);
-
+		ProcessForces();
 	}
 
+	void ProcessForces()
+	{
+		//Vector3 force = new Vector3(0f, 0f, verInput * power);
+		//rb.AddRelativeForce(force);
 
-    void CheckPhysics()
+		//Vector3 rforce = new Vector3(0f, horInput* torque, 0f);
+		//rb.AddRelativeTorque(rforce);
+
+		foreach (Wheel w in wheels)
+		{
+			w.Steer(inputs.X);
+			w.Accelerate(inputs.Y * Speed);
+			w.UpdatePosition();
+		}
+	}
+
+	void CheckPhysics()
 	{
 		Ray ray = new Ray(transform.position, -transform.up);
 		RaycastHit hit;
@@ -82,13 +98,13 @@ public class SkateControl : MonoBehaviour
 	void SkaterMove(Vector2 inputs)
 	{
 
-		PhysicsRotation = aerial ? Quaternion.identity : GetPhysicsRotation(); // ��������� �������� ����
+		PhysicsRotation = aerial ? Quaternion.identity : GetPhysicsRotation();
 		VelocityRotation = GetVelocityRot();
 		InputRotation = Quaternion.identity;
 		ComputedRotation = Quaternion.identity;
 
 
-		if (inputs.magnitude > 0.2f)
+		if (inputs.magnitude > 0.3f)
 		{
 			Vector3 adapted_direction = CamToPlayer(inputs);
 			Vector3 planar_direction = transform.forward;
@@ -110,7 +126,7 @@ public class SkateControl : MonoBehaviour
 	Quaternion GetVelocityRot()
 	{
 		Vector3 vel = rb.velocity;
-		if (vel.magnitude > 0.2f)
+		if (vel.magnitude > 0.3f)
 		{
 			vel.y = 0;
 			Vector3 dir = transform.forward;

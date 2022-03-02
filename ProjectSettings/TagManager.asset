@@ -4,11 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - MainMenuMusic
-  - MainObstacles
-  - UIParent
-  - ProgressManager
-  - SwipeButton
+  - Obs
+  - Crash
   layers:
   - Default
   - TransparentFX
@@ -18,9 +15,9 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
+  - Pointer
+  - Not_In_Minimap
+  - Minimap_Layer
   - 
   - 
   - 
