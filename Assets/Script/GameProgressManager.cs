@@ -56,8 +56,6 @@ public class GameProgressManager : MonoBehaviour
     void FixedUpdate()
     {
 
-        Lose();
-
         progress = progress + 0.01f;
         progressTime.text = "Time: " + progress.ToString("0.0");
         timeModificator.color = timeColor;
@@ -106,12 +104,9 @@ public class GameProgressManager : MonoBehaviour
 
     public void Lose()
     {
-        bool current_aerial = control.aerial;
-        if (current_aerial == true)
-        {
+
             Time.timeScale = 0.5f;
             loseCanvas.gameObject.SetActive(true);
-        }
 
     }
 
@@ -129,7 +124,13 @@ public class GameProgressManager : MonoBehaviour
     {
         Finish();
     }
-
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Terrain")
+        {
+            Lose();
+        }
+    }
     /*private void OnTriggerEnter(Collider collider)
     {
 

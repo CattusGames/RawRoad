@@ -8,7 +8,7 @@ public class Finish : MonoBehaviour
     private GameProgressManager GPMngr;
     void Start()
     {
-        GPMngr = FindObjectOfType<GameProgressManager>();
+        GPMngr = GameObject.FindGameObjectWithTag("ProgressManager").GetComponent<GameProgressManager>();
 
     }
     private void OnTriggerEnter(Collider other)

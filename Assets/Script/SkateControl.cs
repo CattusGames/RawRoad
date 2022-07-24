@@ -5,26 +5,25 @@ using UnityEngine.UI;
 
 public class SkateControl : MonoBehaviour
 {
-
-	public Camera cam;
 	public float Speed = 1f; 
 	public float RotatingSpeed = 1f;
 	public float AdditionalGravity = 0.5f;
 	public float LandingAccelerationRatio = 0.5f;
 	public Wheel[] wheels;
 
+
+	private InputProcessing inputs;
+	private SkateAnim anim;
+	private Vector2 direction;
+	private float height;
+	private GameProgressManager GPMngr;
+
 	[HideInInspector] public Rigidbody rb;
-	InputProcessing inputs;
-	SkateAnim anim;
-	float height;
-
-	public bool aerial;
-
 	[HideInInspector] public Quaternion PhysicsRotation;
 	[HideInInspector] public Quaternion VelocityRotation;
 	[HideInInspector] public Quaternion InputRotation;
 	[HideInInspector] public Quaternion ComputedRotation;
-
+	[HideInInspector] public bool aerial;
 
 	private void Start()
 	{
@@ -36,17 +35,21 @@ public class SkateControl : MonoBehaviour
 
 	private void Update()
 	{
-
+		direction = inputs.GetDirection();
 	}
     private void FixedUpdate()
     {
-		Vector2 direction = inputs.GetDirection();
-		CheckPhysics();
-		SkaterMove(direction);
-		ProcessForces();
+        if (anim.start == true)
+        {
+
+			//CheckPhysics();
+			SkaterMove(direction);
+			ProcessForces();
+		}
+
 	}
 
-	void ProcessForces()
+	private void ProcessForces()
 	{
 		//Vector3 force = new Vector3(0f, 0f, verInput * power);
 		//rb.AddRelativeForce(force);
@@ -62,7 +65,7 @@ public class SkateControl : MonoBehaviour
 		}
 	}
 
-	void CheckPhysics()
+	private void CheckPhysics()
 	{
 		Ray ray = new Ray(transform.position, -transform.up);
 		RaycastHit hit;
@@ -83,7 +86,7 @@ public class SkateControl : MonoBehaviour
 
 	}
 
-	void VelocityOnLanding()
+	private void VelocityOnLanding()
 	{
 		float magn_vel = rb.velocity.magnitude;
 		Vector3 new_vel = rb.velocity;
@@ -95,7 +98,7 @@ public class SkateControl : MonoBehaviour
 	}
 
 
-	void SkaterMove(Vector2 inputs)
+	private void SkaterMove(Vector2 input)
 	{
 
 		PhysicsRotation = aerial ? Quaternion.identity : GetPhysicsRotation();
@@ -104,18 +107,23 @@ public class SkateControl : MonoBehaviour
 		ComputedRotation = Quaternion.identity;
 
 
-		if (inputs.magnitude > 0.3f)
+		if (input.magnitude > 0.3f && inputs.slowdown == false)
 		{
+			/*
 			Vector3 adapted_direction = CamToPlayer(inputs);
 			Vector3 planar_direction = transform.forward;
 			planar_direction.y = 0;
 			InputRotation = Quaternion.FromToRotation(planar_direction, adapted_direction);
-
+			*/
 			if (!aerial)
 			{
 				Vector3 Direction = InputRotation * transform.forward * Speed;
 				rb.AddForce(Direction);
 			}
+		}else if (inputs.slowdown)
+        {
+			Vector3 Direction = InputRotation * -transform.forward * Speed;
+			rb.AddForce(Direction);
 		}
 
 		ComputedRotation = PhysicsRotation * VelocityRotation * transform.rotation;
@@ -154,7 +162,7 @@ public class SkateControl : MonoBehaviour
 
 	Vector3 CamToPlayer(Vector2 d)
 	{
-		Vector3 cam_to_player = transform.position - cam.transform.position;
+		Vector3 cam_to_player = transform.position;
 		cam_to_player.y = 0;
 
 		Vector3 cam_to_player_right = Quaternion.AngleAxis(90, Vector3.up) * cam_to_player;
@@ -163,7 +171,7 @@ public class SkateControl : MonoBehaviour
 		return direction.normalized;
 	}
 
-	void Initialization()
+	private void Initialization()
 	{
 		// cam = Camera.main; 
 		// TargetRotation = transform.rotation; 
@@ -172,5 +180,17 @@ public class SkateControl : MonoBehaviour
 		inputs = GetComponent<InputProcessing>();
 		anim = GetComponent<SkateAnim>();
 		height = GetComponent<Collider>().bounds.size.y + GetComponentInChildren<Collider>().bounds.size.y;
+		GPMngr = GameObject.FindGameObjectWithTag("ProgressManager").GetComponent<GameProgressManager>();
+
 	}
+
+	private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.transform.tag =="Terrain")
+        {
+			anim.end = true;
+			GPMngr.Lose();
+		}
+    }
+
 }

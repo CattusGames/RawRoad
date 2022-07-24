@@ -7,13 +7,16 @@ public class InputProcessing : MonoBehaviour
 {
 	public float X;
 	public float Y;
+    public bool slowdown;
 
     private Rect leftPart = new Rect(0, 0, Screen.width / 2, Screen.height-300);
     private Rect rightPart = new Rect(Screen.width / 2, 0, Screen.width / 2, Screen.height-300);
 
+    
     //public GameProgressManager GPMngr;
     private void Awake()
     {
+        slowdown = false;
         X = 0;
         Y = 0;
     }  
@@ -25,21 +28,33 @@ public class InputProcessing : MonoBehaviour
 		//if (Input.GetKeyDown("t"))
 			//GPMngr.Skip();
 
-       if (Input.GetMouseButton(0)){
+       if (Input.touchCount == 1){
 
-            if (leftPart.Contains(Input.mousePosition))
+            if (leftPart.Contains(Input.mousePosition) && !rightPart.Contains(Input.mousePosition))
             {
                 X = -1;
                 Y = 0;
             }
-            else if (rightPart.Contains(Input.mousePosition))
+            else if (rightPart.Contains(Input.mousePosition) && !leftPart.Contains(Input.mousePosition))
             {
                 X = 1;
                 Y = 0;
             }
-        }else{
+        }
+        else if (Input.touchCount>=2)
+        {
+            slowdown = true;
+            Debug.Log("Slowdown is "+slowdown);
             X = 0;
-            Y = 0;}
+            Y = 0;
+        }
+        else
+        {
+            slowdown = false;
+            X = 0;
+            Y = 0;
+        }
+        
     }
         public Vector2 GetDirection(){
 		return new Vector2(X, Y);}

@@ -6,18 +6,27 @@ using UnityEngine;
 [Serializable]
 public class DataSet
 {
+	public int countLocations;
+	public int countUnlockedLocation;
 	public int countLevels;
 	public int countUnlockedLevel;
 
 	public List<Level> Levels { get; private set; }
+	public List<Location> Locations { get; private set; }
 	
-	public DataSet(int count)
+	public DataSet(List<Location> locations)
 	{
-		countLevels = count;
 		Levels = new List<Level>();
-		for (int i = 0; i < countLevels; i++)
+		Locations = new List<Location>(locations);
+		countLocations = Locations.Count;
+
+		for (int i = 0; i < countLocations; i++)
 		{
-			Levels.Add(new Level());
+            for (int j = 0; j < Locations[i].levels.Count; j++)
+            {
+				Levels.Add(Locations[i].levels[j]);
+			}
 		}
+		countLevels = Levels.Count;
 	}
 }

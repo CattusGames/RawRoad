@@ -6,31 +6,31 @@ EditorUserSettings:
   serializedVersion: 4
   m_ConfigSettings:
     RecentlyUsedSceneGuid-0:
-      value: 0609060755565e580b580d2346760f441216197f797924617a704a6ae6b5633d
+      value: 5a5757560101590a5d0c0e24427b5d44434e4c7a7b7a23677f2b4565b7b5353a
       flags: 0
     RecentlyUsedSceneGuid-1:
-      value: 5209055704050a035f5c087011755c4443154d2e7d7c75652f2f4a37b2b7306a
+      value: 5107555650505a5a5f5d097440750c444f151b72782b7e312c784a6ae3b4673e
       flags: 0
     RecentlyUsedSceneGuid-2:
-      value: 570700515d0659080b590f7440725a44134f4d72782b24672b711960b3e4633e
+      value: 5b00075053545a090c5d5c2748210d444f4e40292d7c76337b281966e7b1313a
       flags: 0
     RecentlyUsedSceneGuid-3:
-      value: 000606055c565b5a0f5a5f204026064417164b787d7a7f60797e4d36e0e2306d
+      value: 54000c005305080f54575d7515735b4440161e2874797e637f2f1c67e0b5616c
       flags: 0
     RecentlyUsedSceneGuid-4:
-      value: 5b57045455560f5a5c080e7514265b44414e4a7c2e7873602f714f32e6e2316e
+      value: 0250565106065e580f5e5823427b0744421641797b7c24352b2f1c6bb7b93168
       flags: 0
     RecentlyUsedSceneGuid-5:
-      value: 5452075f53055c085c085c2414770b12131619292f7d76637a2d4a63bab06369
+      value: 5103555757515d0d0e0f5d2641715d44444e4b7d7c2a736928794866e7e66d6c
       flags: 0
     RecentlyUsedSceneGuid-6:
-      value: 0508505155050f0e0b575d7644770816424f4d7c7a292435782b4d61e6b96669
+      value: 5607030203530d0e080a5874457b5944464e49727a702034752d1836e0b63068
       flags: 0
     RecentlyUsedSceneGuid-7:
-      value: 5000005301015e0d0b0c5e2147250d44444f4f7f287a75327a7e4e61b2e4316c
+      value: 07040651075751595c5f0d2115730744434f1b7a7d7b7e31792c496bbbe16c6d
       flags: 0
     RecentlyUsedSceneGuid-8:
-      value: 000051515407085f5b5c5f7646725a44474f1e7b747a7764792a1b65b3b36c6c
+      value: 530104565505590b5d5e5c7240730f404647487a7c7876607d794d63b2b06468
       flags: 0
     RecentlyUsedSceneGuid-9:
       value: 5054035752565c5e0b0c5e7611220c444f16492f287b713575704a6bb6b36c3a
@@ -64,6 +64,15 @@ EditorUserSettings:
       flags: 0
     RecentlyUsedScenePath-9:
       value: 22424703114646680e0b0227036c72111f19352f223d68252320092a
+      flags: 0
+    UnityRemoteCompression:
+      value: 29617121
+      flags: 0
+    UnityRemoteDevice:
+      value: 225f4d46245b0d4902070862342649191512
+      flags: 0
+    UnityRemoteJoystickSource:
+      value: 315459091150
       flags: 0
     vcSharedLogLevel:
       value: 0d5e400f0650

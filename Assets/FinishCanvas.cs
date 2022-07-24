@@ -10,26 +10,27 @@ public class FinishCanvas : MonoBehaviour
     public Text timeText;
     public Text bestTimeText;
 	
-    float bestTime;
+    private float bestTime,oneStarTime,twoStarTime,threeStarTime;
 
     public GameObject newBestTimeButton;
 
     private void Start()
     {
         newBestTimeButton.SetActive(false);
-		bestTime = LevelsController.dataSet.Levels[SceneManager.GetActiveScene().buildIndex - 3].BestTime;
+		bestTime = LevelsController.dataSet.Levels[SceneManager.GetActiveScene().buildIndex - 1].BestTime;
+
 	}
 
     public void Finish(float time)
     {
-		bestTime = LevelsController.dataSet.Levels[SceneManager.GetActiveScene().buildIndex - 3].BestTime;
+		bestTime = LevelsController.dataSet.Levels[SceneManager.GetActiveScene().buildIndex - 1].BestTime;
 		if (time < bestTime || bestTime == 0f)
         {
             
             newBestTimeButton.SetActive(true);
             bestTime = time;
             
-			LevelsController.OnLevelFinished(SceneManager.GetActiveScene().buildIndex - 3, bestTime);
+			LevelsController.OnLevelFinished(SceneManager.GetActiveScene().buildIndex - 1, bestTime);
 			LevelsController.Save();
         }
 

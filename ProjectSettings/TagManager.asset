@@ -6,6 +6,18 @@ TagManager:
   tags:
   - Obs
   - Crash
+  - MainObstacles
+  - UIParent
+  - ProgressManager
+  - Terrain
+  - MainMenuMusic
+  - Body
+  - LLeg
+  - RLeg
+  - RArm
+  - LArm
+  - Head
+  - Rock
   layers:
   - Default
   - TransparentFX

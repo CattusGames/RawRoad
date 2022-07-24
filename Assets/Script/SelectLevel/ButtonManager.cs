@@ -12,20 +12,19 @@ public class ButtonManager : MonoBehaviour {
 
     private void Start()
     {
-        
+        otherVolume = PlayerPrefs.GetInt("OtherVolume");
         buttonClickSrc = gameObject.GetComponent<AudioSource>();
 
     }
     public void LoadLevel(int numLvl)
     {
-        otherVolume = PlayerPrefs.GetInt("OtherVolume");
+        
         buttonClickSrc.PlayOneShot(buttonClick, otherVolume);
         SceneManager.LoadScene(numLvl);
     }
 
     public void ClickOnGUI(GameObject nextParent)
     {
-        otherVolume = PlayerPrefs.GetInt("OtherVolume");
         buttonClickSrc.PlayOneShot(buttonClick, otherVolume);
         GameObject parent = GameObject.FindWithTag("UIParent");
         parent.SetActive(false);
