@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class EarthRotate : MonoBehaviour
 {
 
-    Color activeColor = new Color();
-
+    //Color activeColor = new Color();
+    [SerializeField] [Range(0.01f,0.1f)] private float _speed;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,7 +17,7 @@ public class EarthRotate : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        activeColor = Color.white;
+        //activeColor = Color.white;
 
         if (Input.touchCount == 1)
         {
@@ -25,14 +25,17 @@ public class EarthRotate : MonoBehaviour
 
             if (screenTouch.phase == TouchPhase.Moved)
             {
-                transform.Rotate(0f, screenTouch.deltaPosition.x, 0f);
+                transform.RotateAround(Vector3.up, -screenTouch.deltaPosition.x * _speed * Mathf.Deg2Rad);
+                transform.RotateAround(Vector3.right, screenTouch.deltaPosition.y * _speed * Mathf.Deg2Rad);
+                
+                Debug.Log("X: " + screenTouch.deltaPosition.x + "\n" + "Y: " + screenTouch.deltaPosition.y );
             }
         }
         else
         {
-            activeColor = Color.blue;
+            //activeColor = Color.blue;
         }
 
-        GetComponent<MeshRenderer>().material.color = activeColor;
+        //GetComponent<MeshRenderer>().material.color = activeColor;
     }
 }
