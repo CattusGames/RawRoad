@@ -17,20 +17,21 @@ public class FinishCanvas : MonoBehaviour
     private void Start()
     {
         newBestTimeButton.SetActive(false);
-		bestTime = LevelsController.dataSet.Levels[SceneManager.GetActiveScene().buildIndex - 1].BestTime;
-
-	}
+		bestTime = LevelsController.dataSet.Levels[SceneManager.GetActiveScene().buildIndex-1].BestTime;
+        Debug.Log(bestTime);
+    }
 
     public void Finish(float time)
     {
-		bestTime = LevelsController.dataSet.Levels[SceneManager.GetActiveScene().buildIndex - 1].BestTime;
+		bestTime = LevelsController.dataSet.Levels[SceneManager.GetActiveScene().buildIndex-1].BestTime;
+
 		if (time < bestTime || bestTime == 0f)
         {
             
             newBestTimeButton.SetActive(true);
             bestTime = time;
             
-			LevelsController.OnLevelFinished(SceneManager.GetActiveScene().buildIndex - 1, bestTime);
+			LevelsController.OnLevelFinished(SceneManager.GetActiveScene().buildIndex, bestTime);
 			LevelsController.Save();
         }
 

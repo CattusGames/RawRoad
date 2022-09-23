@@ -56,7 +56,7 @@ public class GameProgressManager : MonoBehaviour
     void FixedUpdate()
     {
 
-        progress = progress + 0.01f;
+        progress = progress + 0.02f;
         progressTime.text = "Time: " + progress.ToString("0.0");
         timeModificator.color = timeColor;
         var speed = rb.velocity.magnitude * 5;

@@ -1,26 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.ParticleSystemJobs;
 
 public class SkateAnim : MonoBehaviour
 {
 
-	public float AnimationLerpSpeed;
-	SkateControl control;
-	InputProcessing inputs;
-	Animator anim;
-	public GameObject PushParticle;
-	public Transform PushParticleSpawn;
+	[SerializeField]private float AnimationLerpSpeed;
+	private SkateControl control;
+	private InputProcessing inputs;
+	private Animator anim;
+	[SerializeField]private ParticleSystem PushParticle;
 
 	[HideInInspector] public Quaternion FromInputs;
-	float Tilt;
-	bool LastAerial = false;
-	bool Move = false;
+	private float Tilt;
+	private bool LastAerial = false;
+	private bool Move = false;
 
 	private AudioSource playerAudioSrc;
-	public AudioClip playerRide;
-	public AudioClip playerMove;
-	public AudioClip playerAerial;
+	[SerializeField] private AudioClip playerRide, playerMove, playerAerial, playerSlowdown;
+
 	public bool start = false;
 	public bool end = false;
 
@@ -47,7 +46,7 @@ public class SkateAnim : MonoBehaviour
 
 	}
 
-	void ManageAir()
+	private void ManageAir()
 	{
 		bool current_aerial = control.aerial;
 		if (current_aerial)
@@ -70,7 +69,7 @@ public class SkateAnim : MonoBehaviour
 		}
 	}
 
-	void ManageMove()
+	private void ManageMove()
     {
 
 		if (control.rb.velocity.magnitude<3 && inputs.slowdown == false)
@@ -78,18 +77,24 @@ public class SkateAnim : MonoBehaviour
 			playerAudioSrc.PlayOneShot(playerMove,otherSound);
 			Vector3 Direction = transform.forward * 20f;
 			control.rb.AddForce(Direction, ForceMode.Impulse);
-			Instantiate(PushParticle, new Vector3(PushParticleSpawn.position.x, PushParticleSpawn.position.y, PushParticleSpawn.position.z), Quaternion.identity);
+			PushParticle.Play();
 			anim.SetTrigger("Move");
 		}
 		else if (inputs.slowdown)
         {
-			anim.SetTrigger("Slowdown");
-			Instantiate(PushParticle, new Vector3(PushParticleSpawn.position.x, PushParticleSpawn.position.y, PushParticleSpawn.position.z), Quaternion.identity);
+			anim.SetBool("Slowdown",true);
+			ManageSlowdown();
+			PushParticle.Play();
+		}
+		else if (inputs.slowdown == false)
+        {
+			ManageSlowdown();
+			anim.SetBool("Slowdown", false);
 		}
 
 	}
 
-	void ManageTilt()
+	private void ManageTilt()
 	{
 			playerAudioSrc.PlayOneShot(playerRide, otherSound / 10);
 			Vector3 expected_direction = control.VelocityRotation * transform.forward;
@@ -105,14 +110,37 @@ public class SkateAnim : MonoBehaviour
 			AdjustTilt();
 	}
 
-	void AdjustTilt()
+	private void AdjustTilt()
 	{
 		float tilt = anim.GetFloat("Tilt");
 		tilt = Mathf.Lerp(tilt, Tilt, AnimationLerpSpeed * Time.deltaTime);
 		anim.SetFloat("Tilt", tilt);
 	}
 
-	void Initialization()
+	private void ManageSlowdown()
+    {
+		playerAudioSrc.PlayOneShot(playerSlowdown, otherSound / 10);
+		float slowdown = anim.GetFloat("SlowdownFloat");
+		if (inputs.slowdown == true)
+        {
+			slowdown = Mathf.Lerp(slowdown, 1, AnimationLerpSpeed * Time.deltaTime);
+        }
+        else
+        {
+			
+            if (slowdown<0.01)
+            {
+				slowdown = 0f;
+			}
+            else
+            {
+				slowdown = Mathf.Lerp(slowdown, 0, AnimationLerpSpeed * Time.deltaTime);
+			}
+		}
+		anim.SetFloat("SlowdownFloat", slowdown);
+	}
+
+	private void Initialization()
 	{
 		control = GetComponent<SkateControl>();
 		inputs = GetComponent<InputProcessing>();
