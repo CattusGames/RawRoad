@@ -10,7 +10,7 @@ public class SkateAnim : MonoBehaviour
 	private SkateControl control;
 	private InputProcessing inputs;
 	private Animator anim;
-	[SerializeField]private ParticleSystem PushParticle;
+	[SerializeField]private ParticleSystem pushParticle,pushParticle3D, slowdownParticle;
 
 	[HideInInspector] public Quaternion FromInputs;
 	private float Tilt;
@@ -77,14 +77,15 @@ public class SkateAnim : MonoBehaviour
 			playerAudioSrc.PlayOneShot(playerMove,otherSound);
 			Vector3 Direction = transform.forward * 20f;
 			control.rb.AddForce(Direction, ForceMode.Impulse);
-			PushParticle.Play();
+			pushParticle.Play();
+			pushParticle3D.Play();
 			anim.SetTrigger("Move");
 		}
 		else if (inputs.slowdown)
         {
 			anim.SetBool("Slowdown",true);
 			ManageSlowdown();
-			PushParticle.Play();
+			slowdownParticle.Play();
 		}
 		else if (inputs.slowdown == false)
         {

@@ -83,7 +83,7 @@ public class MSACC_SettingsCameraFollow {
 	public bool ignoreCollision = false;
 
 	[Header("Movement")]
-	[Range(1,20)][Tooltip("The speed at which the camera can follow the player.")]
+	[Range(1,100)][Tooltip("The speed at which the camera can follow the player.")]
 	public float displacementSpeed = 3.0f;
 
 	[Header("Rotation")]
@@ -95,7 +95,7 @@ public class MSACC_SettingsCameraFollow {
 	[Header("Use Scrool")]
 	[Tooltip("If this variable is true, the 'FollowPlayer' camera style will have the player's distance affected by the mouse scrool. This will allow the player to zoom in or out of the camera.")]
 	public bool useScrool = false;
-	[Range(0.01f,2.0f)][Tooltip("The speed at which the player can zoom in and out of the camera.")]
+	[Range(0.01f,50f)][Tooltip("The speed at which the player can zoom in and out of the camera.")]
 	public float scroolSpeed = 1.0f;
 	[Range(1,30)][Tooltip("The minimum distance the camera can be relative to the player.")]
 	public float minDistance = 7.0f;
