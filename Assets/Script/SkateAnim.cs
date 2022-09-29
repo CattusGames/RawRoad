@@ -10,10 +10,10 @@ public class SkateAnim : MonoBehaviour
 	private SkateControl control;
 	private InputProcessing inputs;
 	private Animator anim;
-	[SerializeField]private ParticleSystem pushParticle,pushParticle3D, slowdownParticle;
+	[SerializeField]private ParticleSystem pushParticle,pushParticle3D, slowdownParticle, speedParticle;
 
 	[HideInInspector] public Quaternion FromInputs;
-	private float Tilt;
+	private float Tilt, speedParticleColorAlpha;
 	private bool LastAerial = false;
 	private bool Move = false;
 
@@ -27,6 +27,7 @@ public class SkateAnim : MonoBehaviour
 
 	void Start()
 	{
+		speedParticleColorAlpha = 0f;
 		Initialization();
 	}
 
@@ -92,6 +93,13 @@ public class SkateAnim : MonoBehaviour
 			ManageSlowdown();
 			anim.SetBool("Slowdown", false);
 		}
+		
+		/*if (control.rb.velocity.magnitude*5>=29)
+        {
+			speedParticleColorAlpha = Mathf.Lerp(1f,120f, Time.deltaTime);
+			Color color = new Color(1,1,1,speedParticleColorAlpha);
+			speedParticle.startColor = color;
+		}*/
 
 	}
 
