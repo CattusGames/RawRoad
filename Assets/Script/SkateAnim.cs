@@ -11,7 +11,10 @@ public class SkateAnim : MonoBehaviour
 	private InputProcessing inputs;
 	private Animator anim;
 	[SerializeField]private ParticleSystem pushParticle,pushParticle3D, slowdownParticle, speedParticle;
-
+	private ParticleSystem.ColorOverLifetimeModule speedParticleColorModule;
+	private GradientAlphaKey[] gradientAlphaKey;
+	private GradientColorKey[] gradientColorKey;
+	private Gradient firstGradient;
 	[HideInInspector] public Quaternion FromInputs;
 	private float Tilt, speedParticleColorAlpha;
 	private bool LastAerial = false;
@@ -24,11 +27,26 @@ public class SkateAnim : MonoBehaviour
 	public bool end = false;
 
 	float otherSound;
-
-	void Start()
-	{
+    private void Awake()
+    {
+		firstGradient = new Gradient();
+		speedParticleColorModule = speedParticle.colorOverLifetime;
 		speedParticleColorAlpha = 0f;
+		gradientAlphaKey = new GradientAlphaKey[2];
+		gradientColorKey = new GradientColorKey[2];
+		gradientAlphaKey[0].alpha = 0f;
+		gradientAlphaKey[0].time = 0f;
+		gradientColorKey[0].color = Color.white;
+		gradientAlphaKey[1].alpha = 0f;
+		gradientAlphaKey[1].time = 1f;
+		gradientColorKey[1].color = Color.black;
+		firstGradient.SetKeys(gradientColorKey, gradientAlphaKey);
+	}
+    void Start()
+	{
+
 		Initialization();
+		
 	}
 
 	void FixedUpdate()
@@ -93,14 +111,24 @@ public class SkateAnim : MonoBehaviour
 			ManageSlowdown();
 			anim.SetBool("Slowdown", false);
 		}
-		
-		/*if (control.rb.velocity.magnitude*5>=29)
-        {
-			speedParticleColorAlpha = Mathf.Lerp(1f,120f, Time.deltaTime);
-			Color color = new Color(1,1,1,speedParticleColorAlpha);
-			speedParticle.startColor = color;
-		}*/
 
+
+		float speed;
+		speed = control.rb.velocity.magnitude;
+        if (speed>=7)
+        {
+			speedParticleColorAlpha = (speed-7)/27;
+			gradientAlphaKey[0].alpha = speedParticleColorAlpha;
+			firstGradient.SetKeys(gradientColorKey, gradientAlphaKey);
+			speedParticleColorModule.color = new ParticleSystem.MinMaxGradient(firstGradient);
+		}
+        else
+        {
+			gradientAlphaKey[0].alpha = 0f;
+			firstGradient.SetKeys(gradientColorKey, gradientAlphaKey);
+			speedParticleColorModule.color = new ParticleSystem.MinMaxGradient(firstGradient);
+		}
+		
 	}
 
 	private void ManageTilt()

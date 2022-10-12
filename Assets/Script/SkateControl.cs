@@ -159,17 +159,6 @@ public class SkateControl : MonoBehaviour
 		return Quaternion.FromToRotation(transform.up, target_vec);
 	}
 
-	Vector3 CamToPlayer(Vector2 d)
-	{
-		Vector3 cam_to_player = transform.position;
-		cam_to_player.y = 0;
-
-		Vector3 cam_to_player_right = Quaternion.AngleAxis(90, Vector3.up) * cam_to_player;
-
-		Vector3 direction = cam_to_player * d.y + cam_to_player_right * d.x;
-		return direction.normalized;
-	}
-
 	private void Initialization()
 	{
 		// cam = Camera.main; 
