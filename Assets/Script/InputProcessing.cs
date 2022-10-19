@@ -22,11 +22,11 @@ public class InputProcessing : MonoBehaviour
     }  
     void Update()
     {
-        X = Input.GetAxis("Horizontal");
 
 
-		//if (Input.GetKeyDown("t"))
-			//GPMngr.Skip();
+        //if (Input.GetKeyDown("t"))
+        //GPMngr.Skip();
+       
 
        if (Input.touchCount == 1){
 
@@ -41,7 +41,7 @@ public class InputProcessing : MonoBehaviour
                 Y = 0;
             }
         }
-        else if (Input.touchCount>=2)
+        else if (Input.touchCount>=2 || Input.GetKey(KeyCode.S))
         {
             slowdown = true;
             Debug.Log("Slowdown is "+slowdown);
@@ -50,9 +50,23 @@ public class InputProcessing : MonoBehaviour
         }
         else
         {
-            slowdown = false;
-            X = 0;
-            Y = 0;
+            if (Input.GetKey(KeyCode.A) == true)
+            {
+                X = -1;
+                Y = 0;
+            }
+            else if (Input.GetKey(KeyCode.D) == true)
+            {
+                X = 1;
+                Y = 0;
+            }
+            else
+            {
+                slowdown = false;
+                X = 0;
+                Y = 0;
+            }
+
         }
         
     }

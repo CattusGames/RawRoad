@@ -10,38 +10,16 @@ public class SkateAnim : MonoBehaviour
 	private SkateControl control;
 	private InputProcessing inputs;
 	private Animator anim;
-	[SerializeField]private ParticleSystem pushParticle,pushParticle3D, slowdownParticle, speedParticle;
-	private ParticleSystem.ColorOverLifetimeModule speedParticleColorModule;
-	private GradientAlphaKey[] gradientAlphaKey;
-	private GradientColorKey[] gradientColorKey;
-	private Gradient firstGradient;
 	[HideInInspector] public Quaternion FromInputs;
-	private float Tilt, speedParticleColorAlpha;
+	private float Tilt;
 	private bool LastAerial = false;
-	private bool Move = false;
+	private bool isPlaying = false;
+	private PlayerEventManager playerEvents;
 
-	private AudioSource playerAudioSrc;
-	[SerializeField] private AudioClip playerRide, playerMove, playerAerial, playerSlowdown;
 
 	public bool start = false;
 	public bool end = false;
-
-	float otherSound;
-    private void Awake()
-    {
-		firstGradient = new Gradient();
-		speedParticleColorModule = speedParticle.colorOverLifetime;
-		speedParticleColorAlpha = 0f;
-		gradientAlphaKey = new GradientAlphaKey[2];
-		gradientColorKey = new GradientColorKey[2];
-		gradientAlphaKey[0].alpha = 0f;
-		gradientAlphaKey[0].time = 0f;
-		gradientColorKey[0].color = Color.white;
-		gradientAlphaKey[1].alpha = 0f;
-		gradientAlphaKey[1].time = 1f;
-		gradientColorKey[1].color = Color.black;
-		firstGradient.SetKeys(gradientColorKey, gradientAlphaKey);
-	}
+   
     void Start()
 	{
 
@@ -49,7 +27,7 @@ public class SkateAnim : MonoBehaviour
 		
 	}
 
-	void FixedUpdate()
+	void Update()
     {
         if (start == true && end == false)
         {
@@ -73,8 +51,7 @@ public class SkateAnim : MonoBehaviour
 			if (!LastAerial)
 			{
 				LastAerial = true;
-				playerAudioSrc.Stop();
-				playerAudioSrc.PlayOneShot(playerAerial, otherSound);
+				playerEvents.OnAir.Invoke();
 				anim.SetTrigger("Aerial");
 			}
 		}
@@ -91,49 +68,38 @@ public class SkateAnim : MonoBehaviour
 	private void ManageMove()
     {
 
-		if (control.rb.velocity.magnitude<3 && inputs.slowdown == false)
-        {
-			playerAudioSrc.PlayOneShot(playerMove,otherSound);
+		if (control.rb.velocity.magnitude > 3)
+		{
+			playerEvents.OnRide.Invoke();
+		}
+
+		if (control.rb.velocity.magnitude < 3 && inputs.slowdown == false)
+		{
+			playerEvents.OnPush.Invoke();
 			Vector3 Direction = transform.forward * 20f;
 			control.rb.AddForce(Direction, ForceMode.Impulse);
-			pushParticle.Play();
-			pushParticle3D.Play();
 			anim.SetTrigger("Move");
 		}
 		else if (inputs.slowdown)
         {
 			anim.SetBool("Slowdown",true);
 			ManageSlowdown();
-			slowdownParticle.Play();
+			playerEvents.OnSlowdown.Invoke();
 		}
 		else if (inputs.slowdown == false)
         {
-			ManageSlowdown();
 			anim.SetBool("Slowdown", false);
+			ManageSlowdown();
 		}
 
 
-		float speed;
-		speed = control.rb.velocity.magnitude;
-        if (speed>=7)
-        {
-			speedParticleColorAlpha = (speed-7)/27;
-			gradientAlphaKey[0].alpha = speedParticleColorAlpha;
-			firstGradient.SetKeys(gradientColorKey, gradientAlphaKey);
-			speedParticleColorModule.color = new ParticleSystem.MinMaxGradient(firstGradient);
-		}
-        else
-        {
-			gradientAlphaKey[0].alpha = 0f;
-			firstGradient.SetKeys(gradientColorKey, gradientAlphaKey);
-			speedParticleColorModule.color = new ParticleSystem.MinMaxGradient(firstGradient);
-		}
+		playerEvents.OnSpeedUp.Invoke();
 		
 	}
 
 	private void ManageTilt()
 	{
-			playerAudioSrc.PlayOneShot(playerRide, otherSound / 10);
+			
 			Vector3 expected_direction = control.VelocityRotation * transform.forward;
 			float angle = Vector3.SignedAngle(transform.forward, expected_direction, transform.up);
 			// FromInputs = control.VelocityRotation; 
@@ -156,12 +122,12 @@ public class SkateAnim : MonoBehaviour
 
 	private void ManageSlowdown()
     {
-		playerAudioSrc.PlayOneShot(playerSlowdown, otherSound / 10);
 		float slowdown = anim.GetFloat("SlowdownFloat");
 		if (inputs.slowdown == true)
         {
 			slowdown = Mathf.Lerp(slowdown, 1, AnimationLerpSpeed * Time.deltaTime);
-        }
+
+		}
         else
         {
 			
@@ -179,13 +145,14 @@ public class SkateAnim : MonoBehaviour
 
 	private void Initialization()
 	{
+		playerEvents = GetComponent<PlayerEventManager>();
 		control = GetComponent<SkateControl>();
 		inputs = GetComponent<InputProcessing>();
 		anim = GetComponent<Animator>();
-		playerAudioSrc = gameObject.GetComponent<AudioSource>();
 		Tilt = 0.5f;
 		anim.SetFloat("Tilt", Tilt);
-		otherSound = PlayerPrefs.GetInt("OtherVolume");
+		PlayerPrefs.SetInt("OtherVolume", 1);
+
 	}
 
 

@@ -17,6 +17,7 @@ public class SkateControl : MonoBehaviour
 	private Vector2 direction;
 	private float height;
 	private GameProgressManager GPMngr;
+	private PlayerEventManager playerEvents;
 
 	[HideInInspector] public Rigidbody rb;
 	[HideInInspector] public Quaternion PhysicsRotation;
@@ -41,7 +42,6 @@ public class SkateControl : MonoBehaviour
     {
         if (anim.start == true)
         {
-
 			//CheckPhysics();
 			SkaterMove(direction);
 			ProcessForces();
@@ -61,7 +61,7 @@ public class SkateControl : MonoBehaviour
 		{
 			w.Steer(inputs.X);
 			w.Accelerate(inputs.Y * Speed);
-			w.UpdatePosition();
+			//w.UpdatePosition();
 		}
 	}
 
@@ -169,15 +169,27 @@ public class SkateControl : MonoBehaviour
 		anim = GetComponent<SkateAnim>();
 		height = GetComponent<Collider>().bounds.size.y + GetComponentInChildren<Collider>().bounds.size.y;
 		GPMngr = GameObject.FindGameObjectWithTag("ProgressManager").GetComponent<GameProgressManager>();
+		playerEvents = GetComponent<PlayerEventManager>();
 
 	}
 
 	private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.transform.tag =="Terrain")
+        if (collision.gameObject.transform.tag == "Terrain")
         {
 			anim.end = true;
 			GPMngr.Lose();
+		}
+    }
+    private void OnTriggerEnter(Collider collider)
+    {
+        if (collider.gameObject.transform.tag == "Puddle")
+        {
+			playerEvents.OnWater.Invoke();
+        }
+		else if(collider.gameObject.transform.tag == "Dirt")
+        {
+			playerEvents.OnDirt.Invoke();
 		}
     }
 

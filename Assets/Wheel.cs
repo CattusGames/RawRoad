@@ -5,7 +5,7 @@ using UnityEngine;
 public class Wheel : MonoBehaviour
 {
     public bool powered = false;
-    public float maxAngle = 90f;
+    public float maxAngle = 30f;
     public float offset = 0f;
 
     private float turnAngle;
