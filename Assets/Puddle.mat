@@ -146,9 +146,9 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
-    - _SurfaceFoamBlend: 1.6
+    - _SurfaceFoamBlend: 1
     - _WaterColorDepth: 0.3
-    - _WaterColorHorizonDistance: 20
+    - _WaterColorHorizonDistance: 100
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:

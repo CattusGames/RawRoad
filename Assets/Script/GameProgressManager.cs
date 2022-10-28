@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
+using TMPro;
 
 public class GameProgressManager : MonoBehaviour
 {
-    [HideInInspector]public float progress;
-    [HideInInspector]public float maxVelocitySpeed;
-    public Text timeModificator;
-    public Text progressTime;
-    public Text speedText;
-    public GameObject player;
-    public ParticleSystem destroyParticle;
-    public AudioClip destroySound;
+    [HideInInspector] public float progress;
+    [HideInInspector] public float maxVelocitySpeed;
+    [SerializeField] private TextMeshProUGUI timeModificator,progressTime,speedText;
+    [SerializeField] private GameObject player;
+    [SerializeField] private ParticleSystem destroyParticle;
+    [SerializeField] private AudioClip destroySound;
 
     AudioSource audiosrc;
     Color timeColor = Color.red;
@@ -26,6 +26,8 @@ public class GameProgressManager : MonoBehaviour
     public Canvas finishCanvas;
     public Canvas loseCanvas;
 
+    public UnityEvent<int, Vector3> SolidObstacleEvent;
+
     SkateControl control;
 
     private void Awake()
@@ -33,7 +35,7 @@ public class GameProgressManager : MonoBehaviour
         progress = 0.1f;
     }
 
-    void Start()
+   private void Start()
     {
         rb = player.GetComponent<Rigidbody>();
 
@@ -50,14 +52,16 @@ public class GameProgressManager : MonoBehaviour
         finishCanvas.gameObject.SetActive(false);
 
         loseCanvas.gameObject.SetActive(false);
+
+        SolidObstacleEvent.AddListener(OnObstacles);
     }
 
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
 
         progress = progress + 0.02f;
-        progressTime.text = "Time: " + progress.ToString("0.0");
+        progressTime.text = progress.ToString("0.0");
         timeModificator.color = timeColor;
         var speed = rb.velocity.magnitude * 5;
         if (speed < 15)
@@ -68,11 +72,11 @@ public class GameProgressManager : MonoBehaviour
         {
             speedText.color = Color.white;
         }
-        speedText.text = "Speed: " + speed.ToString("0.0") + " m/h";
+        speedText.text = speed.ToString("0.0");
 
     }
 
-    public void OnObstacles(int timeBonus, Vector3 position)
+    private void OnObstacles(int timeBonus, Vector3 position)
     {
         StartCoroutine(ChangeColor());
         timeModificator.text = "+ " + timeBonus;
@@ -83,12 +87,12 @@ public class GameProgressManager : MonoBehaviour
         
     }
 
-    IEnumerator ChangeColor()
+   private IEnumerator ChangeColor()
     {
 
         timeColor.a = 1;
 
-        float hideTime = 2f; // время исчезновения в секундах
+        float hideTime = 2f;
         float timer = hideTime;
 
         while (timer > 0)
@@ -131,18 +135,4 @@ public class GameProgressManager : MonoBehaviour
             Lose();
         }
     }
-    /*private void OnTriggerEnter(Collider collider)
-    {
-
-        if (collider.gameObject.tag == "MainObstacles")
-        {
-
-            OnObstacles();
-            rb.AddRelativeForce(0, -6f, 0, ForceMode.Impulse);
-            audiosrc.PlayOneShot(destroySound, PlayerPrefs.GetInt("OtherVolume"));
-            Instantiate(destroyParticle, new Vector3(collider.transform.position.x, collider.transform.position.y, collider.transform.position.z), Quaternion.identity);
-            Destroy(collider.gameObject);
-
-        }
-    }*/
 }

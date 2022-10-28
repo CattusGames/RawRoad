@@ -2,18 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Obstacles : MonoBehaviour
+public class SolidObstacle : MonoBehaviour
 {
-    [Range(0,10)]
-    public int timeBonus;
-
-    private GameObject player;
+    [SerializeField][Range(0, 10)]private int timeBonus;
 
     private GameProgressManager GPMngr;
 
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
         GPMngr = GameObject.FindGameObjectWithTag("ProgressManager").GetComponent<GameProgressManager>();
         
     }
@@ -26,9 +22,9 @@ public class Obstacles : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject==player)
+        if (other.transform.tag == "Player")
         {
-            GPMngr.OnObstacles(timeBonus, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z));
+            GPMngr.SolidObstacleEvent?.Invoke(timeBonus, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z));
             Destroy(gameObject);
         }
 

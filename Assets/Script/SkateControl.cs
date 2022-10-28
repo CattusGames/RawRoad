@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class SkateControl : MonoBehaviour
 {
-	public float Speed = 1f; 
+	public float Speed = 1f;
+	public float SlowdownSpeed = 1f;
 	public float RotatingSpeed = 1f;
 	public float AdditionalGravity = 0.5f;
 	public float LandingAccelerationRatio = 0.5f;
@@ -121,7 +122,7 @@ public class SkateControl : MonoBehaviour
 			}
 		}else if (inputs.slowdown)
         {
-			Vector3 Direction = InputRotation * -transform.forward * Speed;
+			Vector3 Direction = InputRotation * -transform.forward * SlowdownSpeed;
 			rb.AddForce(Direction);
 		}
 

@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: e9f3ed003c251c442a545f01cc7f25ea
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Kyok
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: d9dc1ac1a323e704bb05edfcaf3ea7a6, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
