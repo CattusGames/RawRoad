@@ -7,7 +7,6 @@ public class ButtonManager : MonoBehaviour {
 
     private AudioSource buttonClickSrc;
     public AudioClip buttonClick;
-
     float otherVolume;
 
     private void Start()
@@ -30,6 +29,4 @@ public class ButtonManager : MonoBehaviour {
         parent.SetActive(false);
         nextParent.SetActive(true);
     }
-
-
 }

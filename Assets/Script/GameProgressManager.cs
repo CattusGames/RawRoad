@@ -15,20 +15,16 @@ public class GameProgressManager : MonoBehaviour
     [SerializeField] private ParticleSystem destroyParticle;
     [SerializeField] private AudioClip destroySound;
 
-    AudioSource audiosrc;
-    Color timeColor = Color.red;
-    Color speedColor = Color.white;
-    Rigidbody rb;
-    Vector3 direction;
+    private AudioSource audiosrc;
+    private Color timeColor = Color.red;
+    private Color speedColor = Color.white;
+    private Rigidbody rb;
+    private Vector3 direction;
+    private bool paused = false;
 
-
-    public Canvas mainCanvas;
-    public Canvas finishCanvas;
-    public Canvas loseCanvas;
+    [SerializeField] private GameObject _mainUI, _loseUI, _finishUI, _pauseUI;
 
     public UnityEvent<int, Vector3> SolidObstacleEvent;
-
-    SkateControl control;
 
     private void Awake()
     {
@@ -37,6 +33,8 @@ public class GameProgressManager : MonoBehaviour
 
    private void Start()
     {
+        Time.timeScale = 1;
+
         rb = player.GetComponent<Rigidbody>();
 
         audiosrc = player.GetComponent<AudioSource>();
@@ -45,20 +43,35 @@ public class GameProgressManager : MonoBehaviour
 
         timeModificator.color = timeColor;
 
-        control = player.GetComponent<SkateControl>();
+        _mainUI.gameObject.SetActive(true);
 
-        mainCanvas.gameObject.SetActive(true);
+        _finishUI.gameObject.SetActive(false);
 
-        finishCanvas.gameObject.SetActive(false);
-
-        loseCanvas.gameObject.SetActive(false);
+        _loseUI.gameObject.SetActive(false);
 
         SolidObstacleEvent.AddListener(OnObstacles);
     }
 
 
+
+    public void SetPause()
+    {
+        if (!paused)
+        {
+            Time.timeScale = 0;
+            paused = true;
+            _pauseUI.SetActive(true);
+        }
+        else
+        {
+            Time.timeScale = 1;
+            paused = false;
+            _pauseUI.SetActive(false);
+        }
+    }
     private void FixedUpdate()
     {
+
 
         progress = progress + 0.02f;
         progressTime.text = progress.ToString("0.0");
@@ -109,8 +122,8 @@ public class GameProgressManager : MonoBehaviour
     public void Lose()
     {
 
-            Time.timeScale = 0.5f;
-            loseCanvas.gameObject.SetActive(true);
+            Time.timeScale = 0f;
+            _loseUI.gameObject.SetActive(true);
 
     }
 
@@ -118,9 +131,9 @@ public class GameProgressManager : MonoBehaviour
     {
 
         Time.timeScale = 0f;
-        mainCanvas.gameObject.SetActive(false);
-        finishCanvas.gameObject.SetActive(true);
-        finishCanvas.gameObject.GetComponent<FinishCanvas>().Finish(progress);
+        _mainUI.gameObject.SetActive(false);
+        _finishUI.gameObject.SetActive(true);
+        _finishUI.gameObject.GetComponent<FinishCanvas>().Finish(progress);
 
     }
 
